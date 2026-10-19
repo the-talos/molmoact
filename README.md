@@ -116,9 +116,9 @@ pip install torch torchvision --index-url https://download.pytorch.org/whl/xpu
 pip install -e .[all]
 ```
 
-The HuggingFace inference entry points pick the device through `molmoact_device.py` (XPU, then CUDA, then CPU), so the commands in Section 5 stay the same, for example `python run_libero_eval.py --task spatial --checkpoint allenai/MolmoAct-7B-D-LIBERO-Spatial-0812`. `scripts/generate.py` takes `--device xpu:0` explicitly. In your own code use `torch.autocast("xpu", dtype=torch.bfloat16)` where the Quick Start uses `"cuda"`.
+The HuggingFace inference entry points pick the device through `molmoact_device.py` (XPU, then CUDA, then CPU), so the commands in Section 5 stay the same, for example `python run_libero_eval.py --task spatial --checkpoint allenai/MolmoAct-7B-D-LIBERO-Spatial-0812`. In your own code use `torch.autocast("xpu", dtype=torch.bfloat16)` where the Quick Start uses `"cuda"`.
 
-The vLLM scripts (`run_libero_eval_vllm.py`, `SteerSimplerEnv`), the training stack and the data preprocessing in `preprocess/` remain CUDA only.
+The vLLM scripts (`run_libero_eval_vllm.py`, `SteerSimplerEnv`) and the data preprocessing in `preprocess/` remain CUDA only.
 ---
 
 ## 4. Training

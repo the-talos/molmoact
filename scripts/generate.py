@@ -1,23 +1,12 @@
-import argparse
-
 from transformers import AutoModelForCausalLM, AutoProcessor, GenerationConfig
 from PIL import Image
 import requests
 
-from molmoact_device import resolve_device
-
-parser = argparse.ArgumentParser()
-parser.add_argument("--checkpoint", default='/weka/oe-training-default/jiafeid/hqfang/checkpoints/checkpoints-test-act/step1-hf')
-parser.add_argument("--image", default="/weka/oe-training-default/jiafeid/hqfang/data/OXE/pose/bc_z/0000000/0000.png")
-parser.add_argument("--device", default=None, help="for example xpu:0 or cuda:0; default is the best available backend")
-parser.add_argument("--max-new-tokens", type=int, default=2048)
-args = parser.parse_args()
-
-device = str(resolve_device(args.device))
+device = "cuda:0"
 
 # load the processor
 processor = AutoProcessor.from_pretrained(
-    args.checkpoint,
+    '/weka/oe-training-default/jiafeid/hqfang/checkpoints/checkpoints-test-act/step1-hf',
     trust_remote_code=True,
     torch_dtype='auto',
     device_map={"": device}
@@ -25,7 +14,7 @@ processor = AutoProcessor.from_pretrained(
 
 # load the model
 model = AutoModelForCausalLM.from_pretrained(
-    args.checkpoint,
+    '/weka/oe-training-default/jiafeid/hqfang/checkpoints/checkpoints-test-act/step1-hf',
     trust_remote_code=True,
     torch_dtype='auto',
     device_map={"": device}
@@ -40,7 +29,7 @@ print(full_instruction)
 
 # process the image and text
 
-image_path = args.image
+image_path = "/weka/oe-training-default/jiafeid/hqfang/data/OXE/pose/bc_z/0000000/0000.png"
 image = Image.open(image_path)
 
 # process the image and text
@@ -59,7 +48,7 @@ inputs = {k: v.to(model.device).unsqueeze(0) for k, v in inputs.items()}
 # generate output; maximum 200 new tokens; stop generation when <|endoftext|> is generated
 output = model.generate_from_batch(
     inputs,
-    GenerationConfig(max_new_tokens=args.max_new_tokens, stop_strings="<|endoftext|>"),
+    GenerationConfig(max_new_tokens=2048, stop_strings="<|endoftext|>"),
     tokenizer=processor.tokenizer
 )
 

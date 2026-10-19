@@ -1,7 +1,7 @@
 """Device-agnostic helpers for the XPU / CUDA / CPU backends.
 
-The inference entry points (``scripts/generate.py``, ``scripts/reconstruct_from_tokens.py``
-and ``experiments/libero/run_libero_eval.py``) go through this module instead of asking
+The inference entry points (``scripts/reconstruct_from_tokens.py`` and
+``experiments/libero/run_libero_eval.py``) go through this module instead of asking
 ``torch.cuda`` directly.
 
 Detection order is XPU, then CUDA, then CPU, and an explicit ``device=`` argument always
