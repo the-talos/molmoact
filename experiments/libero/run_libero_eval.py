@@ -4,6 +4,7 @@ import numpy as np
 import cv2
 from PIL import Image
 import torch
+from molmoact_device import autocast_device_type
 from libero_utils import (
     get_libero_dummy_action,
     get_libero_env,
@@ -154,7 +155,7 @@ def step(img, wrist_img, language_instruction, model, processor, unnorm_key):
 
     # generate output
     with torch.inference_mode():
-        with torch.autocast("cuda", enabled=True, dtype=torch.bfloat16):
+        with torch.autocast(autocast_device_type(model.device), enabled=True, dtype=torch.bfloat16):
             generated_ids = model.generate(**inputs, max_new_tokens=512)
 
     # only get generated tokens; decode them to text

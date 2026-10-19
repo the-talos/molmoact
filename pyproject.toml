@@ -91,3 +91,4 @@ Repository = "https://github.com/allenai/MolmoAct"
 [tool.setuptools]
 include-package-data = true
 packages = ["olmo"]
+py-modules = ["molmoact_device"]

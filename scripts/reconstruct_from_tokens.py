@@ -4,6 +4,7 @@ import os
 from typing import List
 
 import torch
+from molmoact_device import default_device
 import torchvision.utils as vutils
 
 from vqvae import VQVAE
@@ -60,7 +61,7 @@ def load_vae(ckpt_path: str) -> VQVAE:
         loss_type="mse",
     )
 
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    device = str(default_device())
     vae = VQVAE(**cfg_model).to(device)
     ckpt = torch.load(ckpt_path, map_location=device)
 
@@ -133,7 +134,7 @@ def main():
             f"Token count {len(tokens)} cannot be reshaped to a grid. Got H={H}, W={W}."
         )
 
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    device = str(default_device())
     codes = torch.tensor(tokens, dtype=torch.long, device=device).view(1, H, W)
 
     # Load VAE
