@@ -17,8 +17,9 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 for sub in ("", "scripts", os.path.join("experiments", "libero")):
     sys.path.insert(0, os.path.join(ROOT, sub))
 
-import molmoact_device as dev  # noqa: E402
-import robot_utils  # noqa: E402
+import robot_utils
+
+import molmoact_device as dev
 
 
 def _patch_availability(*, xpu: bool, cuda: bool):

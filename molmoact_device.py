@@ -11,11 +11,11 @@ CUDA enabled`` on a wheel built without CUDA, so every helper checks availabilit
 
 from __future__ import annotations
 
-from typing import Any, Optional, Union
+from typing import Any
 
 import torch
 
-DeviceLike = Union[str, torch.device, None]
+DeviceLike = str | torch.device | None
 _ACCELERATORS = ("xpu", "cuda")
 
 
